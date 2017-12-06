@@ -1,0 +1,31 @@
+<!-- views/pages/urls_index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class='container'>
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+  <main>
+      <div class="jumbotron">
+          <h2>URL's:</h2>
+          
+          <ul>
+                <% for (let url in urlDatabase) { %>
+                  <li><%= url %>: <%= urlDatabase[url] %> - <a href="urls/<%= url %>">View Details</a></li>                  
+                <% } %>
+          </ul>
+      </div>
+  </main>
+
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+</html>
