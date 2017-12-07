@@ -1,0 +1,32 @@
+<!-- views/pages/register.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h2>Sign Up</h2>
+        <p>Welcome to TinyApp!</p>
+        <form method="POST" action="/register">
+            <input id="email" type="email" name="email" placeholder="user@example.com" style="width: 150px">
+            <input id="password" type="password" name="password" placeholder="password" style="width: 150px">
+            <button>Register!</button>
+        </form>
+    </div>
+
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
