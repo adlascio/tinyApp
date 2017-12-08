@@ -5,15 +5,33 @@
 <head>
     <% include ../partials/head %>
 </head>
-<body style="font-size:20px; padding:50px;">
+<body class="container">
+
+<header>
     <% include ../partials/header %>
-    <form action="/urls" method="POST" style="margin:150px;">
-      <label for="longURL">Enter a URL:</label>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="Submit">
-    </form>
-    <footer>
-        <% include ../partials/footer %>
-    </footer>
-  </body>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h2>Add a new URL here:</h2>
+        <form action="/urls" method="POST" style="margin:150px;">
+            <label for="longURL">Enter a URL:</label>
+            <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+            <input type="submit" value="Submit">
+          </form>
+    </div>
+
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
 </html>
+
+
+
+
+
+

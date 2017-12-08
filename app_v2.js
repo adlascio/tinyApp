@@ -37,36 +37,92 @@ function generateRandomString() {
     return Math.random().toString(36).substr(2, 6);
 }
 
+function checkEmailExists(email){
+  for (let i in users){
+    if (users[i].email === email){
+      return i, true;
+    }
+  }
+  return false;
+}
+
+function getUserByEmail(email){
+  for (let i in users){
+    if(users[i].email === email){
+      return users[i];
+    } 
+  }
+  return null;
+}
+
+function checkAllFilledOut(email, password){
+  if(email === '' || password === ''){
+    if(email === ''){
+      //message = "You forgot to insert your e-mail. Please, go back.";
+      return false;
+    }
+    //message = "You forgot to insert your password. Please, go back.";
+    return false;
+  }
+  return true;
+}
 
 //homepage
 app.get('/', function(req, res) {
     let templateVars = {
-        username: req.cookies['username']
+      user: users[req.cookies.user_id]
       };
     res.render('pages/index', templateVars);
 });
 
 //log in and set cookies
+  app.get('/login',(req, res) => {
+    
+    res.render('pages/login', {
+      urlDatabase:urlDatabase,
+      user: users[req.cookies.user_id]
+    });
+  });
+  
   app.post('/login', (req, res) => {
-    let username = req.body.username;
-    console.log(username);
-    res.cookie('username', username);
+    userLog = {};
+    if (checkAllFilledOut(req.body.email, req.body.password)) {
+      if(checkEmailExists(req.body.email)) {
+        userLog = getUserByEmail(req.body.email);
+        console.log(userLog);
+        if (userLog.password === req.body.password) {
+
+          console.log("I am in!");
+        }
+        else{
+          res.statusCode = 403;
+          res.send("Invalid e-mail and/or password. Please, go back.");
+        }
+      } else {
+        res.statusCode = 403;
+        res.send("Invalid e-mail and/or password. Please, go back.");
+      }
+     } else {
+      res.statusCode = 400;
+      res.send("You forgot to insert something. Please, go back.");
+    }
+
+    res.cookie('user_id', userLog.id);
     res.redirect(302, '/urls')
   });
 
   //log out and clear cookies
     app.post('/logout', (req, res) => {
-      res.clearCookie('username');
+      res.clearCookie('user_id');
       res.redirect(302, '/urls')
     });
 
 //show all urls
 app.get("/urls", (req, res) => {
-    console.log(req.cookies);
 
     res.render('pages/urls_index', {
         urlDatabase:urlDatabase,
-        username: req.cookies['username']
+        user: users[req.cookies.user_id]
     });
   });
   
@@ -78,7 +134,7 @@ app.get("/urls", (req, res) => {
     
     let templateVars = { shortURL: tempShortURL, 
       longURL: longURL, 
-      username: req.cookies['username'] };
+      user: users[req.cookies.user_id] };
       
       res.render("pages/urls_show", templateVars);
       
@@ -107,7 +163,7 @@ app.get("/urls", (req, res) => {
     //create new URL
     app.get("/urls_new", (req, res) => {
       res.render("pages/urls_new", {
-        username: req.cookies["username"]
+        user: users[req.cookies.user_id]
       });
     });
     
@@ -116,7 +172,7 @@ app.get("/urls", (req, res) => {
       var shortURL = generateRandomString();
       urlDatabase[shortURL] = req.body.longURL;
         res.render("pages/urls_index", {
-            username: req.cookies['username'],
+            user: users[req.cookies.user_id],
             urlDatabase:urlDatabase
         });
       res.redirect(302, 'urls/' + shortURL);
@@ -125,18 +181,31 @@ app.get("/urls", (req, res) => {
     //register new user
     app.get("/register", (req, res) => {
       res.render('pages/register', { 
-        username: req.cookies["username"]
+        user: users[req.cookies.user_id]
  });
 });
 
 app.post('/register', (req, res) => {
   var userId = generateRandomString();
-  users[userId] = {
-    id: userId,
-    email: req.body.email,
-    password: req.body.password
-  };
-  res.render('pages/index', {
-    username: req.cookies["username"]
-  });
+  var message = 'all good';
+  
+  if (checkAllFilledOut(req.body.email, req.body.password)) {
+    if (checkEmailExists(req.body.email)){
+      res.statusCode = 400;
+      res.send("This e-mail is already registered. Did you forget your password?")
+    };
+    users[userId] = {
+      id: userId,
+      email: req.body.email,
+      password: req.body.password
+    }
+    res.cookie('user_id', userId);
+  } else{
+      res.statusCode = 400;
+      res.send("You forgot to insert something. Please, go back.");
+    }
+        res.render('pages/urls_index', {
+          user: users[req.cookies.user_id],
+          urlDatabase:urlDatabase
+});
 });

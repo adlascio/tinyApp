@@ -19,6 +19,7 @@
                 <% for (let url in urlDatabase) { %>
                   <li><%= url %>: <%= urlDatabase[url] %> - <a href="urls/<%= url %>">View Details</a></li>                  
                 <% } %>
+                <li>or add a <a href="/urls_new"> new URL here</a></li>
           </ul>
       </div>
   </main>

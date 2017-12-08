@@ -11,22 +11,16 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 <li><a href="/urls">URL's</a></li>
-                <li><% if (username) {%>
+                <% if (user) {%>
 
                         <form method="POST" action="/logout">
-                            <p>Hello, <%= username %></p>
+                            <p>Hello, <%= user.email %></p>
                             <button>Sign Out</button>
                         </form> 
                     <% } else { %>
-
-                        <form method="POST" action="/login">
-                            <input id="username" type="text" name= "username" placeholder="username" style="width:150px">
-                            <button>Sign In</button>
-                        </form>
-               
-                    <% } %>       
-                </li>
-                <li><a href='/register'> or <u>Register here!</u></a></li> 
+                            <a href="/login"><u>Sign in</u></a>
+                        <a href='/register'> or <u>Register here!</u></a>
+                    <% } %>        
             </ul>
         </div>
     
