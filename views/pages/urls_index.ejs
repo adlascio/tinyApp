@@ -16,10 +16,10 @@
           <h2>URL's:</h2>
           
           <ul>
-                <% for (let url in urlDatabase) { %>
-                  <li><%= url %>: <%= urlDatabase[url] %> - <a href="urls/<%= url %>">View Details</a></li>                  
-                <% } %>
-                <li>or add a <a href="/urls_new"> new URL here</a></li>
+              <%for(var i in urls) { %>
+               <li><%= i + ": " + urls[i]%> <a href="urls/<%= i %>">View Details</a> </li>
+               <% } %> 
+              <li>or add a <a href="/urls_new"> new URL here</a></li>
           </ul>
       </div>
   </main>
