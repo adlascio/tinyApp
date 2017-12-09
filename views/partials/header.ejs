@@ -8,20 +8,21 @@
                 <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
                 
             </a>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" style="right:0px">
                 <li><a href="/">Home</a></li>
                 <li><a href="/urls">URL's</a></li>
+            </ul>
                 <% if (user) {%>
-
+                        
                         <form method="POST" action="/logout">
                             <p>Hello, <%= user.email %></p>
                             <button>Sign Out</button>
                         </form> 
                     <% } else { %>
-                            <a href="/login"><u>Sign in</u></a>
-                        <a href='/register'> or <u>Register here!</u></a>
-                    <% } %>        
-            </ul>
+                            <span style="right:0px">
+                                <a href="/login"><u>Sign in</u></a>
+                        <a href='/register'> or <u>Register here!</u></a></span>
+                    <% } %>
         </div>
     
     </div>

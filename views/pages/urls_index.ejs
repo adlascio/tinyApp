@@ -17,8 +17,11 @@
           
           <ul>
               <%for(var i in urls) { %>
-               <li><%= i + ": " + urls[i]%> <a href="urls/<%= i %>">View Details</a> </li>
-               <% } %> 
+               <li><%= i + ": " + urls[i]%>
+               <form method="POST" action="/urls/<%= i %>/delete"><button type="delete">Delete</button></form><br>
+               <form method="GET" action="/urls/<%= i %>"><button>Update</button></form><br><br><br>
+               <% } %>
+            </li> 
               <li>add a <a href="/urls_new"> new URL here</a></li>
           </ul>
       </div>

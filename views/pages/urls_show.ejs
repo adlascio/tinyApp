@@ -17,8 +17,7 @@
           <ul>
                 <li><a href="<%=longURL%>"><%=shortURL%></a>: <%=longURL%>
                   <% if (user) {%>
-                <form method="POST" action="/urls/<%= shortURL %>/delete"><input type='submit' value='Delete'></form></li><br>
-                <form method="POST" action="/urls/<%= shortURL %>/update">
+                <form method="POST" action="/urls/<%= shortURL %>">
                   <input id="updateURL" type="text" name= "updateURL" placeholder="http://" style="width: 300px">
                   <input type="submit" value="Update">
                 </form>
